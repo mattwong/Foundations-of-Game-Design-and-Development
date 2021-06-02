@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float maxSpeed = 10;
     private Rigidbody2D marioBody;
+    private Animator marioAnimator;
     private float moveHorizontal;
     private bool onGroundState = true;
     public float upSpeed;
@@ -25,19 +26,30 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate =  30;
 	    marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
+        marioAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
+
         // toggle state
         if (Input.GetKeyDown("a") && faceRightState){
             faceRightState = false;
             marioSprite.flipX = true;
+
+            if (Mathf.Abs(marioBody.velocity.x)>1.0) {
+                marioAnimator.SetTrigger("onSkid");
+            }
         }
 
         if (Input.GetKeyDown("d") && !faceRightState){
             faceRightState = true;
             marioSprite.flipX = false;
+
+            if (Mathf.Abs(marioBody.velocity.x)>1.0) {
+                marioAnimator.SetTrigger("onSkid");
+            }
         }
 
         if (!onGroundState && countScoreState)
@@ -53,6 +65,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        marioAnimator.SetBool("onGround", onGroundState);
+
         // dynamic rigidbody
         moveHorizontal = Input.GetAxis("Horizontal");
         if (Mathf.Abs(moveHorizontal) > 0){
@@ -67,15 +81,15 @@ public class PlayerController : MonoBehaviour
             countScoreState = true;
         }
 
-        // stop
         if (!Input.anyKey && onGroundState){
-            marioBody.velocity = Vector2.zero;
+            // make horizontal velocity 0
+            marioBody.velocity = marioBody.velocity * new Vector2(0,1);
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles"))
         {
             onGroundState = true;
             countScoreState = false;
