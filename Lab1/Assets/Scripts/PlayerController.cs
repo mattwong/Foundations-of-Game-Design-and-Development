@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private int score = 0;
     private bool countScoreState = false;
     public GameObject restartButton;
+    public ParticleSystem dustCloud;
+    private bool falling = false;
 
 
     void Start()
@@ -61,6 +63,11 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(score);
             }
         }
+
+        if (marioBody.velocity.y<0f)
+        {
+            falling = true;
+        }
     }
 
     void FixedUpdate()
@@ -89,9 +96,11 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles"))
+        if ((col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles")) && falling)
         {
+            dustCloud.Play();
             onGroundState = true;
+            falling = false;
             countScoreState = false;
             scoreText.text = "Score: " + score.ToString();
         } 
