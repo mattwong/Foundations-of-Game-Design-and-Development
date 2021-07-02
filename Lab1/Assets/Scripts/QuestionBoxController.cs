@@ -27,13 +27,13 @@ public class QuestionBoxController : MonoBehaviour
         }
     }
 
-    bool  ObjectMovedAndStopped(){
-        return  Mathf.Abs(rigidBody.velocity.magnitude)<0.01;
+    bool ObjectMovedAndStopped(){
+        return Mathf.Abs(rigidBody.velocity.magnitude)<0.01;
     }
 
-    IEnumerator  DisableHittable(){
+    IEnumerator DisableHittable(){
         if (!ObjectMovedAndStopped()){
-            yield  return  new  WaitUntil(() => ObjectMovedAndStopped());
+            yield return new WaitUntil(() => ObjectMovedAndStopped());
         }
 
         //continues here when the ObjectMovedAndStopped() returns true

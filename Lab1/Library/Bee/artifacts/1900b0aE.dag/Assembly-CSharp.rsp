@@ -349,13 +349,23 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Scripts/BrickBreak.cs"
 "Assets/Scripts/CameraController.cs"
+"Assets/Scripts/CentralManager.cs"
+"Assets/Scripts/ConsumableInterface.cs"
 "Assets/Scripts/debris.cs"
 "Assets/Scripts/EnemyController.cs"
+"Assets/Scripts/FlowerController.cs"
+"Assets/Scripts/GameConstants.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/MenuController.cs"
 "Assets/Scripts/MushroomController.cs"
+"Assets/Scripts/ObjectPooler.cs"
 "Assets/Scripts/ParallaxContoller.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/PowerupManager.cs"
 "Assets/Scripts/QuestionBoxController.cs"
+"Assets/Scripts/ShroomOrange.cs"
+"Assets/Scripts/ShroomRed.cs"
+"Assets/Scripts/SpawnManager.cs"
 -langversion:8.0
 
 /deterministic

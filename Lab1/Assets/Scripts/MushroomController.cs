@@ -36,7 +36,7 @@ public class MushroomController : MonoBehaviour
         }
         if (col.gameObject.CompareTag("End")) 
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
         if (col.gameObject.CompareTag("Player")) 
         {
@@ -58,7 +58,7 @@ public class MushroomController : MonoBehaviour
         }
     }
 
-    void  OnBecameInvisible(){
-        Destroy(gameObject);	
+    void OnBecameInvisible(){
+        //Destroy(gameObject);	
     }
 }

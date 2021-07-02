@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour
     public float upSpeed;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    public Transform enemyLocation;
+    //public Transform enemyLocation;
     public Text scoreText;
-    private int score = 0;
-    private bool countScoreState = false;
     public GameObject restartButton;
     public ParticleSystem dustCloud;
+    public ParticleSystem fire;
     private bool falling = false;
+    private bool isDead = false;
 
 
     void Start()
@@ -29,10 +29,15 @@ public class PlayerController : MonoBehaviour
 	    marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator = GetComponent<Animator>();
+        GameManager.OnPlayerDeath += PlayerDeathSequence;
     }
 
     void Update()
     {
+        if (isDead == true){
+            return;
+        }
+
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
 
         // toggle state
@@ -54,24 +59,36 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!onGroundState && countScoreState)
-        {
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-            {
-                countScoreState = false;
-                score++;
-                Debug.Log(score);
-            }
-        }
+        // if (!onGroundState && countScoreState)
+        // {
+        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+        //     {
+        //         countScoreState = false;
+        //         score++;
+        //         Debug.Log(score);
+        //     }
+        // }
 
         if (marioBody.velocity.y<0f)
         {
             falling = true;
         }
+
+        // powerups
+        if (Input.GetKeyDown("z")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z, this.gameObject);
+        }
+        if (Input.GetKeyDown("x")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.X, this.gameObject);
+        }
     }
 
     void FixedUpdate()
     {
+        if (isDead == true){
+            return;
+        }
+
         marioAnimator.SetBool("onGround", onGroundState);
 
         // dynamic rigidbody
@@ -85,7 +102,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("space") && onGroundState){
             marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
             onGroundState = false;
-            countScoreState = true;
+            //countScoreState = true;
         }
 
         if (!Input.anyKey && onGroundState){
@@ -101,18 +118,24 @@ public class PlayerController : MonoBehaviour
             dustCloud.Play();
             onGroundState = true;
             falling = false;
-            countScoreState = false;
-            scoreText.text = "Score: " + score.ToString();
+            //countScoreState = false;
+            //scoreText.text = "Score: " + score.ToString();
         } 
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.gameObject.CompareTag("Enemy"))
+    //     {
+    //         Debug.Log("Collided with Gomba!");
+    //         Time.timeScale = 0.0f;
+    //         restartButton.SetActive(true);
+    //     }
+    // }
+
+    void PlayerDeathSequence()
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Collided with Gomba!");
-            Time.timeScale = 0.0f;
-            restartButton.SetActive(true);
-        }
+        isDead = true;
+        fire.Play();
     }
 }

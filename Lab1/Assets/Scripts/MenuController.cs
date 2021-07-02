@@ -9,26 +9,36 @@ public class MenuController : MonoBehaviour
 
     void Awake()
     {
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
         restartButton.SetActive(false);
     }
 
-    public void StartButtonClicked()
+    void Start()
     {
-        foreach (Transform eachChild in transform)
-        {
-            if (eachChild.name != "Score Text")
-            {
-                Debug.Log("Child found. Name: " + eachChild.name);
-                // disable them
-                eachChild.gameObject.SetActive(false);
-                Time.timeScale = 1.0f;
-            }
-        }
+        GameManager.OnPlayerDeath += EndScreen;
     }
+
+    // public void StartButtonClicked()
+    // {
+    //     foreach (Transform eachChild in transform)
+    //     {
+    //         if (eachChild.name != "Score Text")
+    //         {
+    //             Debug.Log("Child found. Name: " + eachChild.name);
+    //             // disable them
+    //             eachChild.gameObject.SetActive(false);
+    //             Time.timeScale = 1.0f;
+    //         }
+    //     }
+    // }
 
     public void RestartButtonClicked()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void EndScreen()
+    {
+        restartButton.SetActive(true);
     }
 }
