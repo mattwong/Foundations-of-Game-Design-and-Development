@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void  OnTriggerEnter2D(Collider2D other){
+    void OnTriggerEnter2D(Collider2D other){
 		// check if it collides with Mario
 		if (other.gameObject.tag == "Player" && dead == false){
 			// check if collides on top

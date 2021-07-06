@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8793902219337664375}
   - component: {fileID: 1492073921322020375}
   - component: {fileID: -3218268340105812394}
+  - component: {fileID: 3644682668658108733}
   m_Layer: 8
   m_Name: RedShroom
   m_TagString: Untagged
@@ -257,3 +258,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t: {fileID: 2800000, guid: 8a1466cabd8469f47a9bc792a5126762, type: 3}
+--- !u!114 &3644682668658108733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843817443400005254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c68f78d08683445b29a861cc5bfd37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

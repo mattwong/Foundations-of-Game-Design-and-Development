@@ -15,8 +15,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     //public Transform enemyLocation;
-    public Text scoreText;
-    public GameObject restartButton;
     public ParticleSystem dustCloud;
     public ParticleSystem fire;
     private bool falling = false;
